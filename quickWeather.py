@@ -7,7 +7,7 @@ import requests, json, pprint, datetime
 
 
 #api key for openweather.org
-api_key = "66f4d47306b215cafcfe2300480b2c04"
+api_key = "API_KEY of a service"
 
 # base_url
 url = "https://api.openweathermap.org/data/2.5/onecall"  
