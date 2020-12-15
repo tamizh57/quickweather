@@ -3,7 +3,7 @@
 # using openweathermap api 
   
 
-import requests, json, pprint 
+import requests, json, pprint, datetime
 
 
 #api key for openweather.org
@@ -27,6 +27,29 @@ def getweatherdata(url,lat,lon, exclude):
     return json.loads(response.text)
 
 
+#function to print weather report summary
+def display(data, loc):
+
+    if "current" in data:
+        dat = int(data['current']['dt'])
+        temp = data['current']['temp']
+        press = data['current']['pressure']
+        hum =  data['current']['humidity']
+        wspeed =  data['current']['wind_speed']
+        wdir = data['current']['wind_deg']
+        visi = data['current']['visibility']
+        desc = data['current']['weather'][0]["description"]
+        print("----------------------------------------------------------")
+        print("Current weather report summary for {1} at {0}".format(datetime.date.fromtimestamp(dat), loc))
+        print("----------------------------------------------------------")
+        print("Temperature : ".rjust(20), "{} celsius".format(temp))
+        print("Pressure : ".rjust(20), "{} hPa".format(press))
+        print("Humidity : ".rjust(20), "{}%".format(hum))
+        print("Wind speed : ".rjust(20), "{} metre/sec".format(wspeed))
+        print("Wind direction : ".rjust(20), "{} degree".format(wdir))
+        print("Visibility : ".rjust(20), "{} metres".format(visi))
+        print("Description : ".rjust(20), "{}".format(desc))
+    
 
 #getting options from user to choose type of weather data
 print('\n')
@@ -42,14 +65,16 @@ option = int(input("Option: "))
 exlist = ["current","minutely","hourly","daily","alerts"]
 exclude = ",".join([x for x in exlist if x != exlist[option - 1] ])
 
+loc = input("Enter city name : ")
   
 # calling getcoords to get latitude and longitude
-coords = getcoords(input("Enter city name : "), api_key)
+coords = getcoords(loc, api_key)
 latitude = coords[0]
 longitude = coords[1]
 
 #calling getweatherdata
 weatherdata = getweatherdata(url,latitude,longitude,exclude)
 
+pprint.pprint(weatherdata['daily'])
+#display(weatherdata, loc)
 
-pprint.pprint(weatherdata)
