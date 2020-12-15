@@ -1,1 +1,1 @@
-Python program to get weather information for a city
+Python program to get current, hourly and daily weather information of a city
